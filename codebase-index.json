@@ -1,10 +1,15 @@
 {
   "version": 1,
-  "builtAt": "2026-07-01T09:39:10.161Z",
-  "gitCommit": "none",
-  "fileCount": 0,
-  "symbolCount": 0,
-  "symbols": {},
+  "builtAt": "2026-07-01T09:46:34.787Z",
+  "gitCommit": "0c823ef",
+  "fileCount": 4,
+  "symbolCount": 8,
+  "symbols": {
+    "LoadRamp.js": { "exports": ["LoadRamp"], "classes": ["LoadRamp"], "functions": [] },
+    "TimeSeries.js": { "exports": ["TimeSeries"], "classes": ["TimeSeries"], "functions": [] },
+    "Persister.js": { "exports": ["Persister"], "classes": ["Persister"], "functions": ["save", "load", "list", "delete", "storageInfo"] },
+    "app.js": { "exports": [], "classes": [], "functions": ["gameLoop", "startLoop", "stopLoop", "updateChart", "updateTable", "setConfigEnabled", "onRunComplete", "refreshSessionList"] }
+  },
   "edges": {
     "imports": {},
     "importedBy": {}
