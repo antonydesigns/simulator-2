@@ -27,35 +27,6 @@ class TimeSeries {
     this._activeRun.data.push({ t: time, mw });
   }
 
-  /** Get data formatted for Chart.js: { labels, datasets } */
-  getChartData() {
-    // Collect all unique time points across all runs
-    const allTimes = new Set();
-    for (const run of this.runs) {
-      for (const d of run.data) allTimes.add(d.t);
-    }
-    const labels = [...allTimes].sort((a, b) => a - b);
-
-    // Build a map per run
-    const datasets = this.runs.map((run, i) => {
-      const map = new Map(run.data.map(d => [d.t, d.mw]));
-      const data = labels.map(t => map.has(t) ? map.get(t) : null);
-      const hue = (i * 60) % 360;
-      return {
-        label: run.label,
-        data,
-        borderColor: `hsl(${hue}, 70%, 55%)`,
-        backgroundColor: `hsla(${hue}, 70%, 55%, 0.1)`,
-        fill: false,
-        tension: 0,
-        pointRadius: 0,
-        spanGaps: false,
-      };
-    });
-
-    return { labels, datasets };
-  }
-
   /** Get data for table rendering: array of { t, values: {runLabel: mw} } */
   getTableData() {
     // Collect all time points

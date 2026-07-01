@@ -85,16 +85,6 @@ body {
 .btn-danger { background: #6b1a1a; border-color: #8b2a2a; color: #fff; }
 .btn-danger:hover:not(:disabled) { background: #8b2222; }
 
-/* ── Chart ── */
-#chart-container {
-  background: #1a1a2e;
-  border-radius: 8px;
-  border: 1px solid #333;
-  padding: 12px;
-}
-
-#chartCanvas { max-height: 320px; }
-
 /* ── Table ── */
 #table-container {
   background: #1a1a2e;

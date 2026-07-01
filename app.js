@@ -1,4 +1,4 @@
-/* ─── App: wires the game loop, chart, table, and persistence ─── */
+/* ─── App: wires the game loop, table, and persistence ─── */
 
 // ── DOM refs ──
 const $fromMw = document.getElementById('fromMw');
@@ -25,36 +25,6 @@ let running = false;
 const TICK_MS = 100; // 10 Hz
 const DT = TICK_MS / 1000; // 0.1s per tick
 
-// ── Chart setup ──
-const ctx = document.getElementById('chartCanvas').getContext('2d');
-const chart = new Chart(ctx, {
-  type: 'line',
-  data: { labels: [], datasets: [] },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 0 },
-    scales: {
-      x: {
-        title: { display: true, text: 'Time (s)', color: '#888' },
-        ticks: { color: '#888' },
-        grid: { color: '#2a2a3e' },
-      },
-      y: {
-        title: { display: true, text: 'Load (MW)', color: '#888' },
-        ticks: { color: '#888' },
-        grid: { color: '#2a2a3e' },
-        beginAtZero: false,
-      },
-    },
-    plugins: {
-      legend: {
-        labels: { color: '#aaa' },
-      },
-    },
-  },
-});
-
 // ── Game loop ──
 function gameLoop() {
   if (!ramp || ramp.isComplete || !running) return;
@@ -62,7 +32,6 @@ function gameLoop() {
   const state = ramp.step(DT);
   series.record(state.time, state.mw);
 
-  updateChart();
   updateTable();
 
   if (state.done) {
@@ -86,13 +55,6 @@ function stopLoop() {
 }
 
 // ── UI updates ──
-function updateChart() {
-  const chartData = series.getChartData();
-  chart.data.labels = chartData.labels;
-  chart.data.datasets = chartData.datasets;
-  chart.update('none');
-}
-
 function updateTable() {
   // Build header
   const labels = series.runLabels;
@@ -187,9 +149,6 @@ $btnRestart.addEventListener('click', () => {
   series.clear();
   runCounter = 0;
 
-  chart.data.labels = [];
-  chart.data.datasets = [];
-  chart.update('none');
   $tableHeader.innerHTML = '<th>Time (s)</th>';
   $tableBody.innerHTML = '';
 
@@ -259,7 +218,6 @@ $btnLoad.addEventListener('click', () => {
   $durationSec.value = series.config.durationSec;
 
   // Rebuild UI
-  updateChart();
   updateTable();
   setConfigEnabled(true);
 
